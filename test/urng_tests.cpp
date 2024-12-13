@@ -1,5 +1,5 @@
-#include <arba/rand/urng.hpp>
 #include <algorithm>
+#include <arba/rand/urng.hpp>
 #include <cstdlib>
 #include <gtest/gtest.h>
 

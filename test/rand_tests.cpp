@@ -1,5 +1,5 @@
-#include <arba/rand/rand.hpp>
 #include <algorithm>
+#include <arba/rand/rand.hpp>
 #include <cstdlib>
 #include <gtest/gtest.h>
 
