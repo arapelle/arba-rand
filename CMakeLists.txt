@@ -23,7 +23,7 @@ set_project_semantic_version("0.1.0" PRE_RELEASE "dev" BUILD_METADATA "${configu
 
 project(${PROJECT_NAME}
         VERSION ${PROJECT_VERSION}
-        DESCRIPTION "A C++ library."
+        DESCRIPTION "A C++ library providing random features."
         HOMEPAGE_URL "https://github.com/arapelle/arba-rand"
         LANGUAGES CXX)
 message(STATUS "PROJECT : ${PROJECT_NAME} ${PROJECT_SEMANTIC_VERSION} ${CMAKE_BUILD_TYPE}")
@@ -38,12 +38,12 @@ configure_headers(configured_headers
 
 ## Headers:
 set(headers
-    include/arba/rand/rand.hpp
+    include/arba/rand/random.hpp
 )
 
 ## Sources:
 set(sources
-    src/arba/rand/rand.cpp
+    src/arba/rand/random.cpp
 )
 
 ## Add C++ library:
