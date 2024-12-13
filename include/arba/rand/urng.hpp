@@ -103,7 +103,7 @@ private:
     distribution_type dist_;
 };
 
-}
+} // namespace private_
 
 template <class RNG, class IntType, IntType... IntParams>
 class uniform_engine : public private_::uniform_engine_impl_<RNG, IntType, IntParams...>
@@ -148,5 +148,5 @@ using urng_i64 = uniform_engine<std::mt19937_64, std::int_fast64_t, IntParams...
 template <std::byte... IntParams>
 using urng_byte = uniform_engine<std::mt19937, std::byte, IntParams...>;
 
-}
-}
+} // namespace rand
+} // namespace arba

@@ -36,7 +36,7 @@ using rand_int_engine_type_ = std::mt19937_64;
 
 rand_int_engine_type_& rand_int_engine_();
 
-}
+} // namespace private_
 
 template <typename IntType>
     requires std::is_integral_v<IntType>
@@ -243,5 +243,5 @@ inline void reseed(private_::rand_int_engine_type_::result_type value)
     return std::byte{ rand_int<byte_int_t>(static_cast<byte_int_t>(min), static_cast<byte_int_t>(max)) };
 }
 
-}
-}
+} // namespace rand
+} // namespace arba
