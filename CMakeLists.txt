@@ -38,12 +38,13 @@ configure_headers(configured_headers
 
 ## Headers:
 set(headers
-    include/arba/rand/random.hpp
+    include/arba/rand/rand.hpp
+    include/arba/rand/urng.hpp
 )
 
 ## Sources:
 set(sources
-    src/arba/rand/random.cpp
+    src/arba/rand/rand.cpp
 )
 
 ## Add C++ library:
