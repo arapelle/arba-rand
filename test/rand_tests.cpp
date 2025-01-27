@@ -1,7 +1,9 @@
-#include <algorithm>
 #include <arba/rand/rand.hpp>
-#include <cstdlib>
+
 #include <gtest/gtest.h>
+
+#include <algorithm>
+#include <cstdlib>
 
 // Tests rand_int<URNG, IT>(urng, [a, b])
 
