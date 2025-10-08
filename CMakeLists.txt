@@ -38,6 +38,7 @@ configure_headers(configured_headers
 
 ## Headers:
 set(headers
+    include/arba/rand/xorshift.hpp
     include/arba/rand/rand.hpp
     include/arba/rand/urng.hpp
 )
