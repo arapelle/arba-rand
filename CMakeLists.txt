@@ -38,6 +38,7 @@ configure_headers(configured_headers
 
 ## Headers:
 set(headers
+    include/arba/rand/bit_balanced_uints.hpp
     include/arba/rand/rand.hpp
     include/arba/rand/xorshift.hpp
     include/arba/rand/rng/urng.hpp
@@ -83,6 +84,12 @@ add_test_subdirectory_if_build(test)
 
 ## Add examples:
 add_example_subdirectory_if_build(example)
+
+## Add tools:
+option(${PROJECT_UPPER_VAR_NAME}_BUILD_TOOLS "Build dev tools." OFF)
+if(${PROJECT_UPPER_VAR_NAME}_BUILD_TOOLS)
+    add_subdirectory(tool)
+endif()
 
 # C++ INSTALL
 
