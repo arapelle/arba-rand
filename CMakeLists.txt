@@ -43,6 +43,7 @@ set(headers
     include/arba/rand/rng/urng.hpp
     include/arba/rand/rng/xorshift_engine.hpp
     include/arba/rand/rnrg/xorshift_range_engine.hpp
+    include/arba/rand/rnrg/rnrg_benchmark.hpp
 )
 
 ## Sources:

@@ -1,9 +1,12 @@
 #include <arba/rand/rnrg/xorshift_range_engine.hpp>
+#include <arba/rand/rnrg/rnrg_benchmark.hpp>
+#include <arba/rand/bit_balanced_uints.hpp>
 #include <arba/rand/rng/xorshift_engine.hpp>
 #include <arba/cppx/policy/execution_policy.hpp>
 
 #include <gtest/gtest.h>
 
+#include <ranges>
 #include <algorithm>
 #include <vector>
 
@@ -211,4 +214,18 @@ TEST(xorshift32_range_engine_tests, generate_random_xorshift32__ints__ok)
     rnrg(std::span(alpha_ints), cppx::endianness_specific);
     rand::generate_random_xorshift32(std::span(beta_ints), seed, cppx::endianness_specific);
     ASSERT_TRUE(std::ranges::equal(alpha_ints, beta_ints));
+}
+
+TEST(xorshift32_range_engine_tests, rnrg_benchmark)
+{
+    using random_number_range_generator_t = rand::xorshift32_range_engine<>;
+
+    random_number_range_generator_t rnrg;
+    rand::rnrg_benchmark benchmark;
+    const rand::rnrg_benchmark_result bm_res = benchmark.compute(rnrg, rand::bit_balanced_uint32s::enumerators, 1024*1024 + 7);
+    std::cout << "AH: " << bm_res.average_homogeneous_byte_distribution_index << std::endl;
+    std::cout << "AU: " << bm_res.average_integer_uniqueness_index << std::endl;
+    std::cout << "AD: " << bm_res.average_execution_duration << std::endl;
+    ASSERT_GT(bm_res.average_homogeneous_byte_distribution_index, 0.99);
+    ASSERT_EQ(bm_res.average_integer_uniqueness_index, 1.);
 }

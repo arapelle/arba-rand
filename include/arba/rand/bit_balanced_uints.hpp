@@ -22,7 +22,7 @@ public:
     // hexadecimal l33t:
     static constexpr bit_balanced_uint32 caac = make_enumerator(0xcaac'caac);
     static constexpr bit_balanced_uint32 c0de = make_enumerator(0xc0de'c0de);
-    // seq:
+    // number sequences:
     static constexpr bit_balanced_uint32 primes_rseq = make_enumerator(1'2'3'5'7'11'13);       // https://oeis.org/A008578
     static constexpr bit_balanced_uint32 primes_lseq = make_enumerator(13'11'7'5'3'2'1);       // https://oeis.org/A008578
     static constexpr bit_balanced_uint32 fibonacci_rseq = make_enumerator(1'1'2'3'5'8'13'21);  // https://oeis.org/A000045
@@ -108,6 +108,7 @@ public:
     // hexadecimal l33t:
     static constexpr bit_balanced_uint64 caac = make_enumerator(0xcaac'caac'caac'caacull);
     static constexpr bit_balanced_uint64 c0de = make_enumerator(0xc0de'c0de'c0de'c0deull);
+    // number sequences:
     static constexpr bit_balanced_uint64 fibonacci_rseq = make_enumerator(1'1'2'3'5'8'13'21'34'55'89'144ull);        // https://oeis.org/A000045
     static constexpr bit_balanced_uint64 fibonacci_lseq = make_enumerator(144'89'55'34'21'13'8'5'3'2'1'1);           // https://oeis.org/A000045
     static constexpr bit_balanced_uint64 triangulars_lseq = make_enumerator(66'55'45'36'28'21'15'10'6'3'1ull);       // https://oeis.org/A000217
@@ -117,6 +118,7 @@ public:
     static constexpr bit_balanced_uint64 bell_rseq = make_enumerator(1'1'2'5'15'52'203'877'4140ull);                 // https://oeis.org/A000110
     static constexpr bit_balanced_uint64 narayana_cows_rseq = make_enumerator(1'1'1'2'3'4'6'9'13'19'28'41'60'88ull); // https://oeis.org/A000930
     static constexpr bit_balanced_uint64 narayana_cows_lseq = make_enumerator(60'41'28'19'13'9'6'4'3'2'1'1'1ull);    // https://oeis.org/A000930
+    // constants digits:
     static constexpr bit_balanced_uint64 pi_rdigits = make_enumerator(3'141592653589793238ull);
     static constexpr bit_balanced_uint64 pi_ldigits = make_enumerator(832397985356295141'3ull);
     static constexpr bit_balanced_uint64 phi_rdigits = make_enumerator(1'6180339887498948482ull);
