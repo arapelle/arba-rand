@@ -1,6 +1,6 @@
 #pragma once
 
-#include "xorshift.hpp"
+#include <arba/rand/xorshift.hpp>
 
 #include <random>
 

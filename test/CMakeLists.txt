@@ -7,8 +7,8 @@ add_cpp_library_basic_tests(${PROJECT_TARGET_NAME} GTest::gtest_main
     SOURCES
         project_version_tests.cpp
         rand_tests.cpp
-        urng_tests.cpp
         xorshift_tests.cpp
-        xorshift32_engine_tests.cpp
-        xorshift64_engine_tests.cpp
 )
+
+add_subdirectory(rng)
+add_subdirectory(rnrg)

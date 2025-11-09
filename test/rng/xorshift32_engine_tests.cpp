@@ -1,18 +1,18 @@
-#include <arba/rand/xorshift_engine.hpp>
+#include <arba/rand/rng/xorshift_engine.hpp>
 #include <arba/rand/rand.hpp>
 
 #include <gtest/gtest.h>
 
 #include <algorithm>
 
-using random_number_generator_t = rand::xorshift64_engine;
+using random_number_generator_t = rand::xorshift32_engine;
 using result_t = random_number_generator_t::result_type;
 
 static_assert(std::uniform_random_bit_generator<random_number_generator_t>);
 static_assert(random_number_generator_t::min() == std::numeric_limits<result_t>::min());
 static_assert(random_number_generator_t::max() == std::numeric_limits<result_t>::max());
 
-TEST(xorshift64_engine_tests, xorshift64_engine__positive_seed__ok)
+TEST(xorshift32_engine_tests, xorshift32_engine__positive_seed__ok)
 {
     random_number_generator_t rng(42);
     EXPECT_EQ(rng.seed(), 42);
@@ -23,7 +23,7 @@ TEST(xorshift64_engine_tests, xorshift64_engine__positive_seed__ok)
     EXPECT_NE(first, second);
 }
 
-TEST(xorshift64_engine_tests, xorshift64_engine__null_seed__ok)
+TEST(xorshift32_engine_tests, xorshift32_engine__null_seed__ok)
 {
     random_number_generator_t rng(0);
     EXPECT_EQ(rng.seed(), std::numeric_limits<result_t>::max());
@@ -34,27 +34,28 @@ TEST(xorshift64_engine_tests, xorshift64_engine__null_seed__ok)
     EXPECT_NE(first, second);
 }
 
-TEST(xorshift64_engine_tests, seed__n__ok)
+TEST(xorshift32_engine_tests, seed__n__ok)
 {
     random_number_generator_t rng(42);
     const result_t value = rng();
     rng.seed(42);
     const result_t value_2 = rng();
     ASSERT_EQ(value, value_2);
-    ASSERT_EQ(value, 45'454'805'674ull);
-    ASSERT_EQ(value_2, 45'454'805'674ull);
+    ASSERT_EQ(value, 11'355'432);
+    ASSERT_EQ(value_2, 11'355'432);
 }
 
-TEST(xorshift64_engine_tests, discard__n__ok)
+
+TEST(xorshift32_engine_tests, discard__n__ok)
 {
-    const result_t first = rand::xorshift64(rand::xorshift64(rand::xorshift64(42)));
+    const result_t first = rand::xorshift32(rand::xorshift32(rand::xorshift32(42)));
     random_number_generator_t rng_2(42);
     rng_2.discard(2);
     const result_t second = rng_2();
     EXPECT_EQ(first, second);
 }
 
-TEST(xorshift64_engine_tests, xorshift64_engine__distribution__balanced)
+TEST(xorshift32_engine_tests, xorshift32_engine__distribution__balanced)
 {
     random_number_generator_t rng(42);
 
