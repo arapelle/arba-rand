@@ -1,0 +1,2 @@
+
+add_executable(bit_balanced_uints_tester bit_balanced_uints_tester.cpp)
