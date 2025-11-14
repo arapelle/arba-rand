@@ -1,13 +1,13 @@
-#include <arba/rand/rnrg/xorshift_range_engine.hpp>
-#include <arba/rand/rnrg/rnrg_benchmark.hpp>
 #include <arba/rand/bit_balanced_uints.hpp>
 #include <arba/rand/rng/xorshift_engine.hpp>
-#include <arba/cppx/policy/execution_policy.hpp>
+#include <arba/rand/rnrg/rnrg_benchmark.hpp>
+#include <arba/rand/rnrg/xorshift_range_engine.hpp>
 
+#include <arba/cppx/policy/execution_policy.hpp>
 #include <gtest/gtest.h>
 
-#include <ranges>
 #include <algorithm>
+#include <ranges>
 #include <vector>
 
 using random_number_generator_t = rand::xorshift64_engine;
@@ -79,7 +79,7 @@ TEST(xorshift64_range_engine_tests, generate_random_bytes__endianness_specific__
     const std::size_t remaining_size = sizeof(integer_t) - 1;
     constexpr std::size_t nb_iterations = 3;
     std::array<std::byte, (nb_iterations * number_of_seeds * sizeof(integer_t)) + remaining_size> bytes;
-    std::ranges::fill(bytes, std::byte{0});
+    std::ranges::fill(bytes, std::byte{ 0 });
     rnrg(std::as_writable_bytes(std::span(bytes)), cppx::endianness_specific);
 
     std::span ints = core::as_writable_span<integer_t>(std::span<std::byte>(bytes), std::nothrow);
@@ -109,8 +109,8 @@ TEST(xorshift64_range_engine_tests, determinist_generating__ok)
     const std::size_t container_size = 32 * sizeof(integer_t) - 1;
     std::array<std::byte, container_size> alpha_bytes;
     std::array<std::byte, container_size> beta_bytes;
-    std::ranges::fill(alpha_bytes, std::byte{0});
-    std::ranges::fill(beta_bytes, std::byte{0});
+    std::ranges::fill(alpha_bytes, std::byte{ 0 });
+    std::ranges::fill(beta_bytes, std::byte{ 0 });
     rnrg(std::span(alpha_bytes), cppx::endianness_specific);
     rnrg = random_number_range_generator_t(seed);
     rnrg(std::span(beta_bytes), cppx::endianness_specific);
@@ -150,8 +150,8 @@ TEST(xorshift64_engine_tests, seed__s__ok)
     const std::size_t container_size = 32 * sizeof(integer_t) - 1;
     std::array<std::byte, container_size> alpha_bytes;
     std::array<std::byte, container_size> beta_bytes;
-    std::ranges::fill(alpha_bytes, std::byte{0});
-    std::ranges::fill(beta_bytes, std::byte{0});
+    std::ranges::fill(alpha_bytes, std::byte{ 0 });
+    std::ranges::fill(beta_bytes, std::byte{ 0 });
     rnrg(std::span(alpha_bytes), cppx::endianness_specific);
     rnrg.seed(seed);
     rnrg(std::span(beta_bytes), cppx::endianness_specific);
@@ -169,8 +169,8 @@ TEST(xorshift64_range_engine_tests, discard__n__ok)
     const std::size_t container_size = 32 * sizeof(integer_t) - 1;
     std::array<std::byte, container_size> alpha_bytes;
     std::array<std::byte, container_size> beta_bytes;
-    std::ranges::fill(alpha_bytes, std::byte{0});
-    std::ranges::fill(beta_bytes, std::byte{0});
+    std::ranges::fill(alpha_bytes, std::byte{ 0 });
+    std::ranges::fill(beta_bytes, std::byte{ 0 });
     rnrg.discard(5);
     rnrg(std::span(alpha_bytes), cppx::endianness_specific);
     random_number_generator_t rng(seed);
@@ -191,8 +191,8 @@ TEST(xorshift64_range_engine_tests, generate_random_xorshift64__bytes__ok)
     const std::size_t container_size = 32 * sizeof(integer_t) - 1;
     std::array<std::byte, container_size> alpha_bytes;
     std::array<std::byte, container_size> beta_bytes;
-    std::ranges::fill(alpha_bytes, std::byte{0});
-    std::ranges::fill(beta_bytes, std::byte{0});
+    std::ranges::fill(alpha_bytes, std::byte{ 0 });
+    std::ranges::fill(beta_bytes, std::byte{ 0 });
     rnrg(std::span(alpha_bytes), cppx::endianness_specific);
     rand::generate_random_xorshift64(std::span(beta_bytes), seed, cppx::endianness_specific);
     ASSERT_TRUE(std::ranges::equal(alpha_bytes, beta_bytes));
@@ -222,7 +222,8 @@ TEST(xorshift64_range_engine_tests, rnrg_benchmark)
 
     random_number_range_generator_t rnrg;
     rand::rnrg_benchmark benchmark;
-    const rand::rnrg_benchmark_result bm_res = benchmark.compute(rnrg, rand::bit_balanced_uint64s::enumerators, 1024*1024 + 7);
+    const rand::rnrg_benchmark_result bm_res =
+        benchmark.compute(rnrg, rand::bit_balanced_uint64s::enumerators, 1024 * 1024 + 7);
     std::cout << "AH: " << bm_res.average_homogeneous_byte_distribution_index << std::endl;
     std::cout << "AU: " << bm_res.average_integer_uniqueness_index << std::endl;
     std::cout << "AD: " << bm_res.average_execution_duration << std::endl;

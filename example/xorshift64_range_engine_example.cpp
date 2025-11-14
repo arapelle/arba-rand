@@ -1,10 +1,11 @@
 #include <arba/rand/rnrg/xorshift_range_engine.hpp>
-#include <arba/cppx/policy/endianness_policy.hpp>
-#include <arba/core/bit/htow.hpp>
 
+#include <arba/core/bit/htow.hpp>
+#include <arba/cppx/policy/endianness_policy.hpp>
+
+#include <chrono>
 #include <cstdlib>
 #include <iostream>
-#include <chrono>
 
 int main()
 {
@@ -17,7 +18,7 @@ int main()
 
     // Init byte storage and seed.
     const std::size_t remaining_size = sizeof(integer_t) - 1;
-    std::vector<std::byte> bytes(1024*1024*1024 + remaining_size, std::byte{0});
+    std::vector<std::byte> bytes(1024 * 1024 * 1024 + remaining_size, std::byte{ 0 });
     const integer_t seed = 42;
 
     time_point_type start_time_point = clock_type::now();

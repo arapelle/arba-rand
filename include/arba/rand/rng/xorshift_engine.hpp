@@ -22,10 +22,7 @@ public:
 
     xorshift32_engine() : xorshift32_engine(result_type(std::random_device{}())) {}
 
-    inline result_type operator()()
-    {
-        return (state_ = xorshift32(state_));
-    }
+    inline result_type operator()() { return (state_ = xorshift32(state_)); }
 
     static constexpr result_type min() { return std::numeric_limits<result_type>::min(); }
 
@@ -33,10 +30,7 @@ public:
 
     [[nodiscard]] inline result_type seed() const { return state_; }
 
-    inline void seed(result_type value)
-    {
-        state_ = xorshift32_engine(value).seed();
-    }
+    inline void seed(result_type value) { state_ = xorshift32_engine(value).seed(); }
 
     inline void discard(unsigned long long times)
     {
@@ -61,10 +55,7 @@ public:
 
     xorshift64_engine() : xorshift64_engine(std::random_device{}()) {}
 
-    inline result_type operator()()
-    {
-        return (state_ = xorshift64(state_));
-    }
+    inline result_type operator()() { return (state_ = xorshift64(state_)); }
 
     static constexpr result_type min() { return std::numeric_limits<result_type>::min(); }
 
@@ -72,10 +63,7 @@ public:
 
     [[nodiscard]] inline result_type seed() const { return state_; }
 
-    inline void seed(result_type value)
-    {
-        state_ = xorshift64_engine(value).seed();
-    }
+    inline void seed(result_type value) { state_ = xorshift64_engine(value).seed(); }
 
     inline void discard(unsigned long long times)
     {
@@ -87,5 +75,5 @@ private:
     result_type state_;
 };
 
-}
-}
+} // namespace rand
+} // namespace arba

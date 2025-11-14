@@ -24,5 +24,5 @@ inline uint64_t xorshift64(uint64_t x)
     return x;
 }
 
-}
-}
+} // namespace rand
+} // namespace arba
