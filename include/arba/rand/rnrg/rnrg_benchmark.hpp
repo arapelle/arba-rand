@@ -30,9 +30,9 @@ public:
     std::vector<double> homogeneous_byte_distribution_indexes;
     std::vector<double> integer_uniqueness_indexes;
     std::vector<double> execution_durations;
-    double average_homogeneous_byte_distribution_index = std::numeric_limits<double>::signaling_NaN();
-    double average_integer_uniqueness_index = std::numeric_limits<double>::signaling_NaN();
-    double average_execution_duration = std::numeric_limits<double>::signaling_NaN();
+    double average_homogeneous_byte_distribution_index = std::numeric_limits<double>::quiet_NaN();
+    double average_integer_uniqueness_index = std::numeric_limits<double>::quiet_NaN();
+    double average_execution_duration = std::numeric_limits<double>::quiet_NaN();
 
     void reserve(std::size_t nb_seeds)
     {
@@ -100,6 +100,7 @@ public:
         {
             rnrg.seed(seed);
             bm_res.seeds.push_back(seed);
+            std::ranges::fill(bytes, std::byte{0});
 
             const time_point_type start_time_point = clock_type::now();
             if constexpr (requires{ rnrg(std::span(bytes), endianness_policy, execution_policy); })
@@ -119,6 +120,8 @@ public:
                 const double homogeneous_byte_distribution_index = 1. - double(*max_iter - *min_iter) / bytes.size();
                 bm_res.homogeneous_byte_distribution_indexes.push_back(homogeneous_byte_distribution_index);
             }
+            else
+                bm_res.homogeneous_byte_distribution_indexes.push_back(std::numeric_limits<double>::quiet_NaN());
 
             if (compute_integer_uniqueness_index)
             {
@@ -127,6 +130,8 @@ public:
                 const double integer_uniqueness_index = std::distance(ints.begin(), uniq_iter) / double(ints.size());
                 bm_res.integer_uniqueness_indexes.push_back(integer_uniqueness_index);
             }
+            else
+                bm_res.integer_uniqueness_indexes.push_back(std::numeric_limits<double>::quiet_NaN());
         }
 
         // clang-format off
