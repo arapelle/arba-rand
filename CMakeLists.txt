@@ -41,9 +41,11 @@ set(headers
     include/arba/rand/bit_balanced_uints.hpp
     include/arba/rand/rand.hpp
     include/arba/rand/xorshift.hpp
+    include/arba/rand/algorithm/xoron64_fill.hpp
     include/arba/rand/rng/urng.hpp
     include/arba/rand/rng/xorshift_engine.hpp
     include/arba/rand/rnrg/xorshift_range_engine.hpp
+    include/arba/rand/rnrg/xoron64_range_engine.hpp
     include/arba/rand/rnrg/rnrg_benchmark.hpp
 )
 
