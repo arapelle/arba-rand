@@ -1,14 +1,15 @@
 #pragma once
 
 #include <arba/rand/xorshift.hpp>
+
 #include <arba/core/bit/htow_when.hpp>
 #include <arba/core/container/span.hpp>
 #include <arba/cppx/policy/endianness_policy.hpp>
 
-#include <array>
-#include <span>
 #include <algorithm>
+#include <array>
 #include <random>
+#include <span>
 
 inline namespace arba
 {
@@ -16,7 +17,7 @@ namespace rand
 {
 
 template <std::size_t SeedCount = 8, int RotationFactor = 3>
-    requires (SeedCount > 0 && (SeedCount & 1) == 0 && RotationFactor != 0)
+    requires(SeedCount > 0 && (SeedCount & 1) == 0 && RotationFactor != 0)
 class xorshift32_range_engine
 {
 public:
@@ -34,10 +35,7 @@ public:
 
     [[nodiscard]] inline integer_type seed() const { return state_; }
 
-    inline void seed(integer_type value)
-    {
-        state_ = xorshift32_range_engine(value).seed();
-    }
+    inline void seed(integer_type value) { state_ = xorshift32_range_engine(value).seed(); }
 
     inline void discard(unsigned long long times)
     {
@@ -47,7 +45,8 @@ public:
 
     std::span<std::byte> operator()(const std::span<std::byte> bytes, cppx::EndiannessPolicy auto endianness_policy);
 
-    std::span<integer_type> operator()(const std::span<integer_type> integers, cppx::EndiannessPolicy auto endianness_policy)
+    std::span<integer_type> operator()(const std::span<integer_type> integers,
+                                       cppx::EndiannessPolicy auto endianness_policy)
     {
         (*this)(std::as_writable_bytes(integers), endianness_policy);
         return integers;
@@ -58,11 +57,12 @@ private:
 };
 
 template <std::size_t SeedCount, int RotationFactor>
-    requires (SeedCount > 0 && (SeedCount & 1) == 0 && RotationFactor != 0)
-std::span<std::byte> xorshift32_range_engine<SeedCount, RotationFactor>::operator()(const std::span<std::byte> bytes,
-                                                                                    cppx::EndiannessPolicy auto endianness_policy)
+    requires(SeedCount > 0 && (SeedCount & 1) == 0 && RotationFactor != 0)
+std::span<std::byte>
+xorshift32_range_engine<SeedCount, RotationFactor>::operator()(const std::span<std::byte> bytes,
+                                                               cppx::EndiannessPolicy auto endianness_policy)
 {
-    const std::size_t seed_count =  SeedCount;
+    const std::size_t seed_count = SeedCount;
     integer_type states[seed_count];
     std::size_t i = 0;
     for (std::size_t end_i = seed_count / 2; i < end_i; ++i)
@@ -94,16 +94,17 @@ std::span<std::byte> xorshift32_range_engine<SeedCount, RotationFactor>::operato
     return bytes;
 }
 
-inline std::span<std::byte> generate_random_xorshift32(std::span<std::byte> bytes,
-                                                       xorshift32_range_engine<>::integer_type seed,
-                                                       cppx::EndiannessPolicy auto endianness_policy = cppx::endianness_specific)
+inline std::span<std::byte>
+generate_random_xorshift32(std::span<std::byte> bytes, xorshift32_range_engine<>::integer_type seed,
+                           cppx::EndiannessPolicy auto endianness_policy = cppx::endianness_specific)
 {
     xorshift32_range_engine<> rnrg(seed);
     return rnrg(bytes, endianness_policy);
 }
 
-inline std::span<std::byte> generate_random_xorshift32(std::span<std::byte> bytes,
-                                                       cppx::EndiannessPolicy auto endianness_policy = cppx::endianness_specific)
+inline std::span<std::byte>
+generate_random_xorshift32(std::span<std::byte> bytes,
+                           cppx::EndiannessPolicy auto endianness_policy = cppx::endianness_specific)
 {
     return generate_random_xorshift32(bytes, std::random_device{}(), endianness_policy);
 }
@@ -125,7 +126,7 @@ generate_random_xorshift32(std::span<xorshift32_range_engine<>::integer_type> in
 }
 
 template <std::size_t SeedCount = 8, int RotationFactor = 3>
-    requires (SeedCount > 0 && (SeedCount & 1) == 0 && RotationFactor != 0)
+    requires(SeedCount > 0 && (SeedCount & 1) == 0 && RotationFactor != 0)
 class xorshift64_range_engine
 {
 public:
@@ -143,10 +144,7 @@ public:
 
     [[nodiscard]] inline integer_type seed() const { return state_; }
 
-    inline void seed(integer_type value)
-    {
-        state_ = xorshift64_range_engine(value).seed();
-    }
+    inline void seed(integer_type value) { state_ = xorshift64_range_engine(value).seed(); }
 
     inline void discard(unsigned long long times)
     {
@@ -156,7 +154,8 @@ public:
 
     std::span<std::byte> operator()(const std::span<std::byte> bytes, cppx::EndiannessPolicy auto endianness_policy);
 
-    std::span<integer_type> operator()(const std::span<integer_type> integers, cppx::EndiannessPolicy auto endianness_policy)
+    std::span<integer_type> operator()(const std::span<integer_type> integers,
+                                       cppx::EndiannessPolicy auto endianness_policy)
     {
         (*this)(std::as_writable_bytes(integers), endianness_policy);
         return integers;
@@ -167,11 +166,12 @@ private:
 };
 
 template <std::size_t SeedCount, int RotationFactor>
-requires (SeedCount > 0 && (SeedCount & 1) == 0 && RotationFactor != 0)
-std::span<std::byte> xorshift64_range_engine<SeedCount, RotationFactor>::operator()(const std::span<std::byte> bytes,
-                                                                                    cppx::EndiannessPolicy auto endianness_policy)
+    requires(SeedCount > 0 && (SeedCount & 1) == 0 && RotationFactor != 0)
+std::span<std::byte>
+xorshift64_range_engine<SeedCount, RotationFactor>::operator()(const std::span<std::byte> bytes,
+                                                               cppx::EndiannessPolicy auto endianness_policy)
 {
-    const std::size_t seed_count =  SeedCount;
+    const std::size_t seed_count = SeedCount;
     integer_type states[seed_count];
     std::size_t i = 0;
     for (std::size_t end_i = seed_count / 2; i < end_i; ++i)
@@ -203,16 +203,17 @@ std::span<std::byte> xorshift64_range_engine<SeedCount, RotationFactor>::operato
     return bytes;
 }
 
-inline std::span<std::byte> generate_random_xorshift64(std::span<std::byte> bytes,
-                                                       xorshift64_range_engine<>::integer_type seed,
-                                                       cppx::EndiannessPolicy auto endianness_policy = cppx::endianness_specific)
+inline std::span<std::byte>
+generate_random_xorshift64(std::span<std::byte> bytes, xorshift64_range_engine<>::integer_type seed,
+                           cppx::EndiannessPolicy auto endianness_policy = cppx::endianness_specific)
 {
     xorshift64_range_engine<> rnrg(seed);
     return rnrg(bytes, endianness_policy);
 }
 
-inline std::span<std::byte> generate_random_xorshift64(std::span<std::byte> bytes,
-                                                       cppx::EndiannessPolicy auto endianness_policy = cppx::endianness_specific)
+inline std::span<std::byte>
+generate_random_xorshift64(std::span<std::byte> bytes,
+                           cppx::EndiannessPolicy auto endianness_policy = cppx::endianness_specific)
 {
     return generate_random_xorshift64(bytes, std::random_device{}(), endianness_policy);
 }
@@ -233,5 +234,5 @@ generate_random_xorshift64(std::span<xorshift64_range_engine<>::integer_type> in
     return generate_random_xorshift64(ints, std::random_device{}(), endianness_policy);
 }
 
-}
-}
+} // namespace rand
+} // namespace arba

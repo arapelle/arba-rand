@@ -1,5 +1,5 @@
-#include <arba/rand/rng/xorshift_engine.hpp>
 #include <arba/rand/rand.hpp>
+#include <arba/rand/rng/xorshift_engine.hpp>
 
 #include <gtest/gtest.h>
 
@@ -44,7 +44,6 @@ TEST(xorshift32_engine_tests, seed__n__ok)
     ASSERT_EQ(value, 11'355'432);
     ASSERT_EQ(value_2, 11'355'432);
 }
-
 
 TEST(xorshift32_engine_tests, discard__n__ok)
 {

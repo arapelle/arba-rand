@@ -9,8 +9,7 @@ namespace rand
 
 class bit_balanced_uint32s;
 
-class bit_balanced_uint32
-    : public meta::enumerator<bit_balanced_uint32, bit_balanced_uint32s, uint32_t>
+class bit_balanced_uint32 : public meta::enumerator<bit_balanced_uint32, bit_balanced_uint32s, uint32_t>
 {
     ARBA_META_ENUMERATOR(bit_balanced_uint32)
 };
@@ -95,8 +94,7 @@ public:
 
 class bit_balanced_uint64s;
 
-class bit_balanced_uint64
-    : public meta::enumerator<bit_balanced_uint64, bit_balanced_uint64s, uint64_t>
+class bit_balanced_uint64 : public meta::enumerator<bit_balanced_uint64, bit_balanced_uint64s, uint64_t>
 {
     ARBA_META_ENUMERATOR(bit_balanced_uint64)
 };

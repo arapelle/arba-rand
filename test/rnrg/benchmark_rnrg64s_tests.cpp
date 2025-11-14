@@ -1,28 +1,23 @@
+#include <arba/rand/bit_balanced_uints.hpp>
+#include <arba/rand/rnrg/rnrg_benchmark.hpp>
 #include <arba/rand/rnrg/xoron64_range_engine.hpp>
 #include <arba/rand/rnrg/xorshift_range_engine.hpp>
 
-#include <arba/rand/rnrg/rnrg_benchmark.hpp>
-#include <arba/rand/bit_balanced_uints.hpp>
-
 #include <arba/cppx/policy/build_type.hpp>
-
 #include <gtest/gtest.h>
 
-#include <ranges>
 #include <algorithm>
-#include <vector>
-#include <iostream>
 #include <iomanip>
+#include <iostream>
+#include <ranges>
+#include <vector>
 
 static constexpr std::size_t one_Mb = 1024 * 1024ull;
 
 using rnrg_benchmark_result = rand::rnrg_benchmark_result<rand::bit_balanced_uint64>;
 
-void benchmark_(const std::size_t nb_bytes,
-                const std::size_t nb_seeds,
-                cppx::EndiannessPolicy auto endianness_policy,
-                cppx::ExecutionPolicy auto execution_policy,
-                rnrg_benchmark_result& xorshift64_bm_res,
+void benchmark_(const std::size_t nb_bytes, const std::size_t nb_seeds, cppx::EndiannessPolicy auto endianness_policy,
+                cppx::ExecutionPolicy auto execution_policy, rnrg_benchmark_result& xorshift64_bm_res,
                 rnrg_benchmark_result& xoron64_bm_res)
 {
     rand::rnrg_benchmark benchmark;
@@ -58,7 +53,7 @@ TEST(benchmark_rnrg64s_tests, benchmark_HUD_4Mb_neutral_par)
 
 TEST(benchmark_rnrg64s_tests, benchmark_HUD_4Mb_specific_par)
 {
-    constexpr std::size_t nb_bytes = 4 *one_Mb + 7;
+    constexpr std::size_t nb_bytes = 4 * one_Mb + 7;
     rnrg_benchmark_result xorshift64_bm_res;
     rnrg_benchmark_result xoron64_bm_res;
     benchmark_(nb_bytes, 20, cppx::endianness_specific, std::execution::par, xorshift64_bm_res, xoron64_bm_res);

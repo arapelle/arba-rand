@@ -1,18 +1,18 @@
 #pragma once
 
+#include <arba/core/container/span.hpp>
 #include <arba/cppx/policy/endianness_policy.hpp>
 #include <arba/cppx/policy/execution_policy.hpp>
-#include <arba/core/container/span.hpp>
 
+#include <algorithm>
+#include <cassert>
 #include <chrono>
+#include <concepts>
+#include <cstdint>
+#include <limits>
 #include <numeric>
 #include <span>
 #include <vector>
-#include <algorithm>
-#include <limits>
-#include <concepts>
-#include <cstdint>
-#include <cassert>
 
 inline namespace arba
 {
@@ -50,46 +50,45 @@ public:
     using clock_type = std::chrono::steady_clock;
     using time_point_type = std::chrono::time_point<clock_type>;
 
-    bool compute_homogeneous_byte_distribution_index :1 = true;
-    bool compute_integer_uniqueness_index :1 = true;
+    bool compute_homogeneous_byte_distribution_index : 1 = true;
+    bool compute_integer_uniqueness_index : 1 = true;
 
     template <class RnrgT, std::ranges::range SeedRangeT>
-    requires (std::convertible_to<std::ranges::range_value_t<SeedRangeT>, typename RnrgT::integer_type>)
-        rnrg_benchmark_result<std::ranges::range_value_t<SeedRangeT>>
-        compute(RnrgT& rnrg, const SeedRangeT& seeds, std::size_t range_byte_size) const
+        requires(std::convertible_to<std::ranges::range_value_t<SeedRangeT>, typename RnrgT::integer_type>)
+    rnrg_benchmark_result<std::ranges::range_value_t<SeedRangeT>> compute(RnrgT& rnrg, const SeedRangeT& seeds,
+                                                                          std::size_t range_byte_size) const
     {
         return compute(rnrg, seeds, range_byte_size, cppx::endianness_specific, std::execution::seq);
     }
 
     template <class RnrgT, std::ranges::range SeedRangeT>
-    requires (std::convertible_to<std::ranges::range_value_t<SeedRangeT>, typename RnrgT::integer_type>)
-        rnrg_benchmark_result<std::ranges::range_value_t<SeedRangeT>>
-        compute(RnrgT& rnrg, const SeedRangeT& seeds, std::size_t range_byte_size,
-                cppx::EndiannessPolicy auto endianness_policy) const
+        requires(std::convertible_to<std::ranges::range_value_t<SeedRangeT>, typename RnrgT::integer_type>)
+    rnrg_benchmark_result<std::ranges::range_value_t<SeedRangeT>>
+    compute(RnrgT& rnrg, const SeedRangeT& seeds, std::size_t range_byte_size,
+            cppx::EndiannessPolicy auto endianness_policy) const
     {
         return compute(rnrg, seeds, range_byte_size, endianness_policy, std::execution::seq);
     }
 
     template <class RnrgT, std::ranges::range SeedRangeT>
-    requires (std::convertible_to<std::ranges::range_value_t<SeedRangeT>, typename RnrgT::integer_type>)
-        rnrg_benchmark_result<std::ranges::range_value_t<SeedRangeT>>
-        compute(RnrgT& rnrg, const SeedRangeT& seeds, std::size_t range_byte_size,
-                cppx::ExecutionPolicy auto execution_policy) const
+        requires(std::convertible_to<std::ranges::range_value_t<SeedRangeT>, typename RnrgT::integer_type>)
+    rnrg_benchmark_result<std::ranges::range_value_t<SeedRangeT>>
+    compute(RnrgT& rnrg, const SeedRangeT& seeds, std::size_t range_byte_size,
+            cppx::ExecutionPolicy auto execution_policy) const
     {
         return compute(rnrg, seeds, range_byte_size, cppx::endianness_specific, execution_policy);
     }
 
     template <class RnrgT, std::ranges::range SeedRangeT>
-        requires (std::convertible_to<std::ranges::range_value_t<SeedRangeT>, typename RnrgT::integer_type>)
+        requires(std::convertible_to<std::ranges::range_value_t<SeedRangeT>, typename RnrgT::integer_type>)
     rnrg_benchmark_result<std::ranges::range_value_t<SeedRangeT>>
     compute(RnrgT& rnrg, const SeedRangeT& seeds, std::size_t range_byte_size,
-            cppx::EndiannessPolicy auto endianness_policy,
-            cppx::ExecutionPolicy auto execution_policy) const
+            cppx::EndiannessPolicy auto endianness_policy, cppx::ExecutionPolicy auto execution_policy) const
     {
         using integer_t = typename RnrgT::integer_type;
 
         assert(range_byte_size > 0);
-        std::vector<std::byte> bytes(range_byte_size, std::byte{0});
+        std::vector<std::byte> bytes(range_byte_size, std::byte{ 0 });
 
         rnrg_benchmark_result<std::ranges::range_value_t<SeedRangeT>> bm_res;
         bm_res.range_byte_size = range_byte_size;
@@ -100,14 +99,15 @@ public:
         {
             rnrg.seed(seed);
             bm_res.seeds.push_back(seed);
-            std::ranges::fill(bytes, std::byte{0});
+            std::ranges::fill(bytes, std::byte{ 0 });
 
             const time_point_type start_time_point = clock_type::now();
-            if constexpr (requires{ rnrg(std::span(bytes), endianness_policy, execution_policy); })
+            if constexpr (requires { rnrg(std::span(bytes), endianness_policy, execution_policy); })
                 rnrg(std::span(bytes), endianness_policy, execution_policy);
             else
                 rnrg(std::span(bytes), endianness_policy);
-            const duration_type duration = std::chrono::duration_cast<duration_type>(clock_type::now() - start_time_point);
+            const duration_type duration =
+                std::chrono::duration_cast<duration_type>(clock_type::now() - start_time_point);
             bm_res.execution_durations.push_back(duration.count());
 
             if (compute_homogeneous_byte_distribution_index)
@@ -152,5 +152,5 @@ public:
     }
 };
 
-} // namepsace rand
-} // namepsace arba
+} // namespace rand
+} // namespace arba

@@ -1,5 +1,5 @@
-#include <arba/rand/rng/xorshift_engine.hpp>
 #include <arba/rand/rand.hpp>
+#include <arba/rand/rng/xorshift_engine.hpp>
 
 #include <gtest/gtest.h>
 
