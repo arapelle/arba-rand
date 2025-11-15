@@ -1,4 +1,4 @@
-#include <arba/rand/urng.hpp>
+#include <arba/rand/rng/urng.hpp>
 
 #include <gtest/gtest.h>
 

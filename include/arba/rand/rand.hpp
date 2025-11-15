@@ -7,8 +7,7 @@ inline namespace arba
 namespace rand
 {
 
-template <typename IntType, typename UrngT>
-    requires std::is_integral_v<IntType>
+template <std::integral IntType, std::uniform_random_bit_generator UrngT>
 [[nodiscard]] inline IntType rand_int(UrngT& rng)
 {
     if constexpr (std::is_same_v<IntType, typename UrngT::result_type>)
@@ -22,8 +21,7 @@ template <typename IntType, typename UrngT>
     }
 }
 
-template <typename IntType, typename UrngT>
-    requires std::is_integral_v<IntType>
+template <std::integral IntType, std::uniform_random_bit_generator UrngT>
 [[nodiscard]] inline IntType rand_int(UrngT& rng, IntType min, IntType max)
 {
     return std::uniform_int_distribution<IntType>(min, max)(rng);
@@ -38,8 +36,7 @@ rand_int_engine_type_& rand_int_engine_();
 
 } // namespace private_
 
-template <typename IntType>
-    requires std::is_integral_v<IntType>
+template <std::integral IntType>
 [[nodiscard]] inline IntType rand_int()
 {
     if constexpr (std::is_same_v<IntType, typename private_::rand_int_engine_type_::result_type>)
@@ -53,8 +50,7 @@ template <typename IntType>
     }
 }
 
-template <typename IntType>
-    requires std::is_integral_v<IntType>
+template <std::integral IntType>
 [[nodiscard]] inline IntType rand_int(IntType min, IntType max)
 {
     return std::uniform_int_distribution<IntType>(min, max)(private_::rand_int_engine_());

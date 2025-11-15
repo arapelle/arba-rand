@@ -19,7 +19,7 @@ set_build_type_ifndef()
 
 set_project_name(NAMESPACE "arba" FEATURE_NAME "rand")
 string(TIMESTAMP configure_datetime "%Y%m%d-%H%M%S")
-set_project_semantic_version("0.3.0" BUILD_METADATA "${configure_datetime}")
+set_project_semantic_version("0.4.0" BUILD_METADATA "${configure_datetime}")
 
 project(${PROJECT_NAME}
         VERSION ${PROJECT_VERSION}
@@ -39,7 +39,13 @@ configure_headers(configured_headers
 ## Headers:
 set(headers
     include/arba/rand/rand.hpp
-    include/arba/rand/urng.hpp
+    include/arba/rand/xorshift.hpp
+    include/arba/rand/algorithm/xoron64_fill.hpp
+    include/arba/rand/rng/urng.hpp
+    include/arba/rand/rng/xorshift_engine.hpp
+    include/arba/rand/rnrg/xorshift_range_engine.hpp
+    include/arba/rand/rnrg/xoron64_range_engine.hpp
+    include/arba/rand/rnrg/rnrg_benchmark.hpp
 )
 
 ## Sources:
@@ -69,10 +75,10 @@ add_cpp_library(${PROJECT_TARGET_NAME} ${${PROJECT_UPPER_VAR_NAME}_LIBRARY_TYPE}
 add_library("${PROJECT_NAMESPACE}::${PROJECT_FEATURE_NAME}${LIBRARY_TYPE_POSTFIX}" ALIAS ${PROJECT_TARGET_NAME})
 
 ## Link C++ targets:
-find_package(arba-cppx 0.3.0 REQUIRED CONFIG)
+find_package(arba-core 0.32.0 REQUIRED CONFIG)
 target_link_libraries(${PROJECT_TARGET_NAME}
     PUBLIC
-        arba::cppx
+        arba::core
 )
 
 ## Add tests:
@@ -80,6 +86,12 @@ add_test_subdirectory_if_build(test)
 
 ## Add examples:
 add_example_subdirectory_if_build(example)
+
+## Add tools:
+option(${PROJECT_UPPER_VAR_NAME}_BUILD_TOOLS "Build dev tools." OFF)
+if(${PROJECT_UPPER_VAR_NAME}_BUILD_TOOLS)
+    add_subdirectory(tool)
+endif()
 
 # C++ INSTALL
 
