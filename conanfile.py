@@ -76,7 +76,7 @@ class ArbaRandRecipe(ConanFile):
         cmake.build()
         build_test = not self.conf.get("tools.build:skip_test", default=True)
         if build_test:
-            cmake.ctest(cli_args=["--progress", "--output-on-failure"])
+            cmake.ctest(cli_args=["--progress", "--output-on-failure", "--parallel 1"])
 
     def package(self):
         copy(self, "LICENSE.md", src=self.source_folder, dst=os.path.join(self.package_folder, "licenses"))
