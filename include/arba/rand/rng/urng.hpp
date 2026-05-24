@@ -30,10 +30,10 @@ struct integer_type_<Type>
 template <typename Type>
 using integer_type_t_ = typename integer_type_<Type>::type;
 
-template <class RNG, class IntType, IntType... IntParams>
+template <std::uniform_random_bit_generator RNG, class IntType, IntType... IntParams>
 class uniform_engine_impl_;
 
-template <class RNG, class IntType, IntType MinValue, IntType MaxValue>
+template <std::uniform_random_bit_generator RNG, class IntType, IntType MinValue, IntType MaxValue>
 class uniform_engine_impl_<RNG, IntType, MinValue, MaxValue> : public RNG
 {
 public:
@@ -70,7 +70,7 @@ public:
     }
 };
 
-template <class RNG, class IntType>
+template <std::uniform_random_bit_generator RNG, class IntType>
 class uniform_engine_impl_<RNG, IntType> : public RNG
 {
 public:
@@ -105,7 +105,7 @@ private:
 
 } // namespace private_
 
-template <class RNG, class IntType, IntType... IntParams>
+template <std::uniform_random_bit_generator RNG, class IntType, IntType... IntParams>
 class uniform_engine : public private_::uniform_engine_impl_<RNG, IntType, IntParams...>
 {
     using base_ = private_::uniform_engine_impl_<RNG, IntType, IntParams...>;
